@@ -95,6 +95,6 @@ print("Change report:")
 print(report)
 
 if len(change) > 0:
-    notify_change(report)
+    notify_change(report, ntfy_topic)
     
 write_state(state_fname, new_state)
