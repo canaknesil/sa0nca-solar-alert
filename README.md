@@ -6,3 +6,7 @@ Solar data is fetched from <https://www.hamqsl.com/solar.html>.
 
 `src/hourly.py` should be executed periodically, at most hourly.
 
+Configuration is done via environment variables:
+- `SA0NCA_SOLAR_ALERT_STATE_FNAME`, optional, default to `/tmp/solar-alert-state.json`
+- `SA0NCA_SOLAR_ALERT_NTFY_TOPIC`
+

@@ -5,6 +5,7 @@ import urllib.request
 import json
 from pathlib import Path
 import requests
+import os
 
 
 def create_empty_state():
@@ -64,9 +65,9 @@ def fetch_data():
     return state
 
 
-def notify_change(msg):
+def notify_change(msg, ntfy_topic):
     requests.post(
-        "https://ntfy.sh/SA0NCA-solar-alert-8d281",
+        "https://ntfy.sh/" + ntfy_topic,
         data=msg,
         headers={
             "Title": "Band availability has changed",
@@ -75,7 +76,12 @@ def notify_change(msg):
     )
 
 
-state_fname = "/tmp/solar-alert-state.json"
+state_fname = os.environ.get('SA0NCA_SOLAR_ALERT_STATE_FNAME') or "/tmp/solar-alert-state.json"
+ntfy_topic = os.environ.get('SA0NCA_SOLAR_ALERT_NTFY_TOPIC')
+
+if not ntfy_topic:
+    raise Exception("SA0NCA_SOLAR_ALERT_NTFY_TOPIC isn't set")
+
 new_state = fetch_data()
 
 if Path(state_fname).exists():
